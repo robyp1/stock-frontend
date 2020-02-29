@@ -1,0 +1,15 @@
+<div *ngIf="_countriesArr.length > 0">
+    <ng-content></ng-content>
+    <br>
+</div>
+<div *ngFor="let c of _countriesArr">
+    <div>Name:{{c.name}}</div><br>
+    <div>capital:{{c.capital}}</div><br>
+    <div>nativeName:{{c.nativeName}}</div><br>
+    <div>population:{{c.population}}</div><br>
+    <div>region:{{c.region}}</div><br>
+    <div>timezones:{{c.timezones}}</div><br>
+    <div>flag:{{c.flag}}</div><br>
+<br>
+<br>
+</div>
