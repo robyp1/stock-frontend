@@ -16,7 +16,7 @@ then use EventSourcePolyfill instead of EventSource
 })
 export class StockReactiveService {
 
-  url: string = "http://localhost:8080/stocks/titolo"
+  url: string = "http://localhost:8080/stocks/demo" //sorgente SSE (server sent event), è un hot observable, arriva sempre e solo l'ultimo dato in push
   stockP : StockPrice [] = []
 
   constructor(private httpClient : HttpClient ) { 
@@ -29,6 +29,7 @@ export class StockReactiveService {
           let url = this.url; 
           let eventSource = new EventSourcePolyfill(url,{ heartbeatTimeout: 15000, connectionTimeout: 15000, headers: { 'Authorization': 'Basic foo' }});
           eventSource.onmessage = (event => {
+            this.stockP = []; //svuoto il vecchio dato perchè inserisco solo l'ultimo arrivato e mi dimentico degli altri
             console.debug('Received event: ', event);
             let json = JSON.parse(event.data);
             this.stockP.push(new StockPrice(json['symbol'], json['price'], json['time']))

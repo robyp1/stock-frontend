@@ -16,12 +16,11 @@ export class AppComponent {
     let observerEvent : Observable<Array<StockPrice>> = stockreactiveservice.getStockPriceStreams()
     const stocksPricesSubscription = observerEvent.subscribe({
       next(stocksPrices) {
-        /* stocksPrices.forEach(stockPriceData => {
+         stocksPrices.forEach(stockPriceData => {
           console.log('Current title/prices: ', stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'] )
-        }); */
-        //ultimo valore arrivato
-        let stockPriceData: StockPrice = stocksPrices[stocksPrices.length -1];
-        console.log('Current title/prices: ', stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'] )
+        }); 
+        /* let stockPriceData: StockPrice = stocksPrices[stocksPrices.length -1];
+        console.log('Current title/prices: ', stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'] ) */
       },
       error(msg) {
         console.log('Error Getting prices: ', msg);
