@@ -16,24 +16,22 @@ export class AppComponent implements AfterViewInit{
 
   //stockPriceData: StockPrice
   stockreactiveserviceRef: StockReactiveService;
-  render: Renderer2;
+  renderer: Renderer2;
 
-  constructor(public errorService: ErrorService, private stockreactiveservice: StockReactiveService, private render2: Renderer2){
+  constructor(public errorService: ErrorService, private stockreactiveservice: StockReactiveService, private renderer2: Renderer2){
     this.stockreactiveserviceRef = stockreactiveservice;
-    this.render = render2;
+    this.renderer = renderer2;
   }
 
   ngAfterViewInit(){
     let observerEvent : Observable<Array<StockPrice>> = this.stockreactiveserviceRef.getStockPriceStreams()
     let  stockPriceData : StockPrice
-    const htmlWriter = new HtmlWriter(this.render, this.div);
+    const htmlWriter = new HtmlWriter(this.renderer, this.div);
     const stocksPricesSubscription = observerEvent.subscribe({
-      next(stocksPrices) {
+      next(stocksPrices) { //in realtà l'array è di un solo elemento, l'ultimo aggiornamento
          stocksPrices.forEach(stockPriceData => {
           console.log('Current title/prices: ', stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'] )
         }); 
-        /* let stockPriceData: StockPrice = stocksPrices[stocksPrices.length -1];
-        console.log('Current title/prices: ', stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'] ) */
         stockPriceData = stocksPrices[stocksPrices.length -1]
         //pushDataToPage
         if (stockPriceData){
@@ -54,18 +52,24 @@ export class AppComponent implements AfterViewInit{
 }
 
 export class HtmlWriter{
-  render: Renderer2;
+  renderer: Renderer2;
   div: ElementRef<any>;
 
-  constructor(private render2: Renderer2, div: ElementRef){
-    this.render = render2
+  constructor(private renderer2: Renderer2, div: ElementRef){
+    this.renderer = renderer2
     this.div = div
   }
 
   renderToHtml(stockPriceData: StockPrice){
-    const p: HTMLParagraphElement = this.render.createElement('p')
-    p.innerHTML = 'Current title/prices: ' + stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time']
-    this.render.appendChild(this.div.nativeElement, p)
+    //const p: HTMLParagraphElement = this.render.createElement('p')
+    //p.innerHTML = 'Current title/prices: ' + stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time']
+    //this.render.appendChild(this.div.nativeElement, p)
+    let datapush = 'Current title/prices: ' + stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'];
+    this.renderer.setProperty(this.div.nativeElement, 'innerHTML',datapush)
+    this.renderer.addClass(this.div.nativeElement,'higlight');
+    setTimeout(() => { // si ferma dopo il tempo indicato
+      this.renderer.removeClass(this.div.nativeElement,'higlight')
+    }, 500);
   }
 }
 
