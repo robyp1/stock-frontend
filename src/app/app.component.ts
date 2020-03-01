@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements AfterViewInit{
   title = 'stock-frontend';
 
-  @ViewChild('div',{static:false}) div: ElementRef;
+  @ViewChild('pushTag',{static:false}) p: ElementRef;
 
   //stockPriceData: StockPrice
   stockreactiveserviceRef: StockReactiveService;
@@ -26,7 +26,7 @@ export class AppComponent implements AfterViewInit{
   ngAfterViewInit(){
     let observerEvent : Observable<Array<StockPrice>> = this.stockreactiveserviceRef.getStockPriceStreams()
     let  stockPriceData : StockPrice
-    const htmlWriter = new HtmlWriter(this.renderer, this.div);
+    const htmlWriter = new HtmlWriter(this.renderer, this.p);
     const stocksPricesSubscription = observerEvent.subscribe({
       next(stocksPrices) { //in realtà l'array è di un solo elemento, l'ultimo aggiornamento
          stocksPrices.forEach(stockPriceData => {
@@ -66,9 +66,9 @@ export class HtmlWriter{
     //this.render.appendChild(this.div.nativeElement, p)
     let datapush = 'Current title/prices: ' + stockPriceData['symbol'] + "/" + stockPriceData['price'] + " at time " + stockPriceData['time'];
     this.renderer.setProperty(this.div.nativeElement, 'innerHTML',datapush)
-    this.renderer.addClass(this.div.nativeElement,'higlight');
+    this.renderer.addClass(this.div.nativeElement,'push-color');
     setTimeout(() => { // si ferma dopo il tempo indicato
-      this.renderer.removeClass(this.div.nativeElement,'higlight')
+      this.renderer.removeClass(this.div.nativeElement,'push-color')
     }, 500);
   }
 }
