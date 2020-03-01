@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 /* import * as EventSource from 'eventsource' */
 import {EventSourcePolyfill} from 'ng-event-source'
+import { ErrorService } from './error.service';
 
 /* 
 Angular 8
@@ -19,7 +20,7 @@ export class StockReactiveService {
   url: string = "http://localhost:8080/stocks/demo" //sorgente SSE (server sent event), è un hot observable, arriva sempre e solo l'ultimo dato in push
   stockP : StockPrice [] = []
 
-  constructor(private httpClient : HttpClient ) { 
+  constructor(private httpClient : HttpClient, private errorService: ErrorService) { 
     
   }
 
@@ -37,16 +38,19 @@ export class StockReactiveService {
           });
           eventSource.onerror = (error) => {
             console.log("error")
-            // readyState === 0 (closed) means the remote source closed the connection,
+            // readyState === 2 (closed) means the remote source closed the connection,
             // so we can safely treat it as a normal situation. Another way of detecting the end of the stream
             // is to insert a special element in the stream of events, which the client can identify as the last one.
-            if(eventSource.readyState === 0) {
+            if(eventSource.readyState === 2) {
               console.log('The stream has been closed by the server.');
               eventSource.close();
               observer.complete();
-            } else {
+            } 
+            else {
+              this.errorService.errorMsg = "No data in push"
               observer.error('EventSource error: ' + error);
             }
+            //console.log(eventSource.readyState);
           }
         });
         return observableObj;
