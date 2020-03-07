@@ -1,13 +1,3 @@
-<b>
-  <h2><p appHiglightPushDirective>PUSH example:</p></h2>
-  <div #pushTag style="width: 600px;"></div>
-</b>
-<hr>
-<br>
-<br>
-<app-error *ngIf="errorService.errorMsg">
-  {{errorService.errorMsg}}
-</app-error>
-<app-countries-api>
-<div><h3>Test RestService...List of countries returned:</h3></div>  
-</app-countries-api>
+<app-menu></app-menu>
+
+<router-outlet></router-outlet>
