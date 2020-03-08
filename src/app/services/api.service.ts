@@ -12,4 +12,9 @@ export class ApiService {
     return this.http.get("http://restcountries.eu/rest/v2/all")
     //return this.http.get("http://restcountries.eu/rest/v2/error") //usare questo per fare uscire msg di errore!
   }
+
+
+  getCountryInfo(name: string){
+    return this.http.get("http://restcountries.eu/rest/v2/?name=" + name)
+  }
 }

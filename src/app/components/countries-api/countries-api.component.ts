@@ -7,13 +7,15 @@ import { ErrorService } from 'src/app/services/error.service';
   templateUrl: './countries-api.component.html',
   styleUrls: ['./countries-api.component.scss']
 })
-export class CountriesApiComponent implements OnInit, OnDestroy {
+export class CountriesApiComponent implements OnInit/*, OnDestroy*/  {
 
-  _countriesArr: CountryData[] =[]
+  //_countriesArr: CountryData[] =[]
+  
+  countryes : any[]
 
   constructor(private api: ApiService, private errorService: ErrorService) {
     
-    const onsuccess = (res) => {
+    /*const onsuccess = (res) => {
       console.log("sucess");
       
       res.forEach(element => {
@@ -27,6 +29,11 @@ export class CountriesApiComponent implements OnInit, OnDestroy {
         country.flag = element.flag
         this._countriesArr.push(country)
       });
+    }*/
+
+        
+    const onsuccess = (res) =>{
+      this.countryes = res
     }
 
     const onerror = (res) => {
@@ -34,6 +41,7 @@ export class CountriesApiComponent implements OnInit, OnDestroy {
       this.errorService.errorMsg = "Errore nella chiamata al servizio"
       
     }
+
     this.api.getCountries().subscribe(onsuccess, onerror);
   }
   
@@ -41,13 +49,13 @@ export class CountriesApiComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy(){
+  /*ngOnDestroy(){
     this._countriesArr = []
-  }
+  }*/
 
 }
 
-export interface CountryData{
+/*export interface CountryData{
   name: string
   capital?: string
   region?: string
@@ -67,4 +75,4 @@ export class CountryDataImpl implements CountryData {
   flag: string;
 
 
-}
+}*/

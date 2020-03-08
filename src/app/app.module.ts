@@ -11,11 +11,13 @@ import { HiglightPushDirectiveDirective } from './directives/higlight-push-direc
 import { MenuComponent } from './menu/menu.component';
 import { PushComponent } from './components/push/push.component';
 import { RouterModule } from '@angular/router';
+import { CountryComponent } from './components/countries-api/country/country.component';
 
 const routes = [
    { path: "", component: AppComponent },
    { path: "countries", component: CountriesApiComponent},
-   { path: "push", component: PushComponent}
+   { path: "push", component: PushComponent},
+   { path: "country", component: CountryComponent}
 ]
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ const routes = [
     CountriesApiComponent,
     HiglightPushDirectiveDirective,
     MenuComponent,
-    PushComponent
+    PushComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
