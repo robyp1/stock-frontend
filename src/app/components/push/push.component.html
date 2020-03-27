@@ -1,3 +1,14 @@
+<form>
+<select name="title" 
+    [ngModel]="titoloSelezionato"
+    (ngModelChange)="titoloSelezionato=$event; subscribePush(titoloSelezionato.nome)">
+  <option [ngValue]="t" *ngFor="let t of titoli">
+    {{t.nome}}
+  </option>
+</select>
+{{titoloSelezionato | json}}
+</form>
+<br>
 <b>
     <h2><p appHiglightPushDirective>PUSH example:</p></h2>
     <div #pushTag style="width: 600px;"></div>

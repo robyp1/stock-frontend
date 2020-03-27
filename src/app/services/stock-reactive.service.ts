@@ -17,17 +17,17 @@ then use EventSourcePolyfill instead of EventSource
 })
 export class StockReactiveService {
 
-  url: string = "http://localhost:8080/stocks/demo" //sorgente SSE (server sent event), è un hot observable, arriva sempre e solo l'ultimo dato in push
+  url: string = "http://localhost:8080/stocks/" //sorgente SSE (server sent event), è un hot observable, arriva sempre e solo l'ultimo dato in push
   stockP : StockPrice [] = []
 
   constructor(private httpClient : HttpClient, private errorService: ErrorService) { 
     
   }
 
-  getStockPriceStreams(): Observable<Array<StockPrice>>
+  getStockPriceStreams(title: string): Observable<Array<StockPrice>>
   {
       const observableObj : Observable<Array<StockPrice>> = new Observable((observer) =>{
-          let url = this.url; 
+          let url = this.url + title; 
           let eventSource = new EventSourcePolyfill(url,{ heartbeatTimeout: 15000, connectionTimeout: 15000, headers: { 'Authorization': 'Basic foo' }});
           eventSource.onmessage = (event => {
             this.stockP = []; //svuoto il vecchio dato perchè inserisco solo l'ultimo arrivato e mi dimentico degli altri

@@ -13,6 +13,13 @@ export class PushComponent  implements AfterViewInit {
 
   @ViewChild('pushTag',{static:false}) p: ElementRef;
 
+  titoli: titolo [] = [
+    {nome:"fiat"},
+    {nome:"enel"}
+  ]
+
+  titoloSelezionato: titolo = { nome:"fiat"}
+
   //stockPriceData: StockPrice
   stockreactiveserviceRef: StockReactiveService;
   renderer: Renderer2;
@@ -23,7 +30,12 @@ export class PushComponent  implements AfterViewInit {
   }
 
   ngAfterViewInit(){
-    let observerEvent : Observable<Array<StockPrice>> = this.stockreactiveserviceRef.getStockPriceStreams()
+  
+  }
+
+  subscribePush( title: string){
+    console.log("new subscription for: " + title);
+    let observerEvent : Observable<Array<StockPrice>> = this.stockreactiveserviceRef.getStockPriceStreams(title)
     let  stockPriceData : StockPrice
     const htmlWriter = new HtmlWriter(this.renderer, this.p);
     const stocksPricesSubscription = observerEvent.subscribe({
@@ -48,6 +60,10 @@ export class PushComponent  implements AfterViewInit {
   }
 
 
+}
+
+export interface titolo{
+  nome: string
 }
 
 export class HtmlWriter{
