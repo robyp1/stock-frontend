@@ -11,6 +11,7 @@ import { HiglightPushDirectiveDirective } from './directives/higlight-push-direc
 import { MenuComponent } from './menu/menu.component';
 import { PushComponent } from './components/push/push.component';
 import { CountryComponent } from './components/countries-api/country/country.component';
+import { MomentPipe } from './pipes/moment.pipe';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CountryComponent } from './components/countries-api/country/country.com
     HiglightPushDirectiveDirective,
     MenuComponent,
     PushComponent,
-    CountryComponent
+    CountryComponent,
+    MomentPipe
   ],
   imports: [
     BrowserModule,

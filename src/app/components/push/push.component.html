@@ -1,7 +1,14 @@
 <form>
+<br>
+<h2>Mercati data ora:</h2>
+<div>
+{{now | moment:"DD/MM/YYYY HH:mm"}}
+</div>
+<br>
 <select name="title" 
     [ngModel]="titoloSelezionato"
     (ngModelChange)="titoloSelezionato=$event; subscribePush(titoloSelezionato.nome)">
+    <option [ngValue]="undefined" disabled selected>Seleziona un titolo</option>
   <option [ngValue]="t" *ngFor="let t of titoli">
     {{t.nome}}
   </option>

@@ -18,6 +18,8 @@ export class PushComponent  implements AfterViewInit {
     {nome:"enel"}
   ]
 
+  now: Date = new Date();
+
   titoloSelezionato: titolo = { nome:"fiat"}
 
   //stockPriceData: StockPrice
